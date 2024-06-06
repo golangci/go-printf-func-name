@@ -2,7 +2,7 @@ package main
 
 import "log"
 
-func myLog(format string, args ...interface{}) {
+func myLogf(format string, args ...interface{}) {
 	const prefix = "[my] "
 	log.Printf(prefix+format, args...)
 }

@@ -1,12 +1,11 @@
 package analyzer_test
 
 import (
+	"go-printf-func-name/pkg/analyzer"
+	"golang.org/x/tools/go/analysis/analysistest"
 	"os"
 	"path/filepath"
 	"testing"
-
-	"github.com/jirfag/go-printf-func-name/pkg/analyzer"
-	"golang.org/x/tools/go/analysis/analysistest"
 )
 
 func TestAll(t *testing.T) {
@@ -16,5 +15,5 @@ func TestAll(t *testing.T) {
 	}
 
 	testdata := filepath.Join(filepath.Dir(filepath.Dir(wd)), "testdata")
-	analysistest.Run(t, testdata, analyzer.Analyzer, "p")
+	analysistest.Run(t, testdata, analyzer.Analyzer_package_name, "name")
 }

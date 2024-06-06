@@ -17,7 +17,7 @@ var Analyzer_package_name = &analysis.Analyzer{
 
 func runPackageName(pass *analysis.Pass) (interface{}, error) {
 	inspector := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
-	nodeFilter := []ast.Node{
+	nodeFilter := []ast.Node{ //  filter needed nodes: visit only them
 		(*ast.Ident)(nil),
 	}
 
@@ -30,6 +30,5 @@ func runPackageName(pass *analysis.Pass) (interface{}, error) {
 			// fmt.Println(pkgName)
 		}
 	})
-
 	return nil, nil
 }
