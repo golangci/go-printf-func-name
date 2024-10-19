@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/jirfag/go-printf-func-name/pkg/analyzer"
+	"github.com/golangci/go-printf-func-name/pkg/analyzer"
 	"golang.org/x/tools/go/analysis/singlechecker"
 )
 

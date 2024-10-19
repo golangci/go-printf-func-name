@@ -1,0 +1,36 @@
+name: Tests
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CGO_ENABLED: 0
+
+jobs:
+  cross:
+    name: Go
+    strategy:
+      matrix:
+        go-version: [ oldstable, stable ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Test
+        run: make test
+
+      - name: Build
+        run: make build
+
+      - name: Vet integration
+        run: make vet
