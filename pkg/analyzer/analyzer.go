@@ -4,10 +4,9 @@ import (
 	"go/ast"
 	"strings"
 
+	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
 	"golang.org/x/tools/go/ast/inspector"
-
-	"golang.org/x/tools/go/analysis"
 )
 
 var Analyzer = &analysis.Analyzer{
@@ -18,12 +17,13 @@ var Analyzer = &analysis.Analyzer{
 }
 
 func run(pass *analysis.Pass) (interface{}, error) {
-	inspector := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
+	insp := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
+
 	nodeFilter := []ast.Node{
 		(*ast.FuncDecl)(nil),
 	}
 
-	inspector.Preorder(nodeFilter, func(node ast.Node) {
+	insp.Preorder(nodeFilter, func(node ast.Node) {
 		funcDecl := node.(*ast.FuncDecl)
 
 		if res := funcDecl.Type.Results; res != nil && len(res.List) != 0 {

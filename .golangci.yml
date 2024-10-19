@@ -1,0 +1,108 @@
+linters:
+  disable-all: true
+  enable:
+    - asasalint
+    - asciicheck
+    - bidichk
+    - containedctx
+    - contextcheck
+#    - copyloopvar
+    - cyclop
+    - dogsled
+    - dupl
+    - dupword
+    - durationcheck
+    - err113
+    - errcheck
+    - errname
+    - errorlint
+    - fatcontext
+    - forbidigo
+    - funlen
+    - gci
+    - gocheckcompilerdirectives
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - gofmt
+    - gofumpt
+    - goimports
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - importas
+    - inamedparam
+    - ineffassign
+    - interfacebloat
+#    - intrange
+    - ireturn
+    - loggercheck
+    - maintidx
+    - makezero
+    - mirror
+    - misspell
+    - musttag
+    - nestif
+    - nilerr
+    - nlreturn
+    - noctx
+    - nolintlint
+    - nonamedreturns
+    - perfsprint
+    - predeclared
+    - reassign
+    - revive
+    - staticcheck
+    - stylecheck
+    - tagalign
+    - tagliatelle
+    - tenv
+    - testableexamples
+    - testifylint
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - wastedassign
+    - whitespace
+    - wrapcheck
+    - wsl
+
+linters-settings:
+  stylecheck:
+    checks: ['*', '-ST1000']
+  cyclop:
+    max-complexity: 15
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    - linters:
+        - revive
+      text: "package-comments: should have a package comment"
+    - linters:
+        - revive
+      text: "exported: .+ should have comment or be unexported"
+    - path: pkg/analyzer/analyzer.go
+      linters:
+        - gochecknoglobals
+      text: "Analyzer is a global variable"
+
+output:
+  show-stats: true
+  sort-results: true
+  sort-order:
+    - linter
+    - file
