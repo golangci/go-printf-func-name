@@ -1,12 +1,19 @@
+version: "2"
+
+formatters:
+  enable:
+    - gci
+    - gofumpt
+
 linters:
-  disable-all: true
+  default: none
   enable:
     - asasalint
     - asciicheck
     - bidichk
     - containedctx
     - contextcheck
-#    - copyloopvar
+    - copyloopvar
     - cyclop
     - dogsled
     - dupl
@@ -19,7 +26,6 @@ linters:
     - fatcontext
     - forbidigo
     - funlen
-    - gci
     - gocheckcompilerdirectives
     - gochecknoglobals
     - gochecknoinits
@@ -29,20 +35,16 @@ linters:
     - gocyclo
     - godot
     - godox
-    - gofmt
-    - gofumpt
-    - goimports
     - gomoddirectives
     - gomodguard
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
     - importas
     - inamedparam
     - ineffassign
     - interfacebloat
-#    - intrange
+    - intrange
     - ireturn
     - loggercheck
     - maintidx
@@ -61,10 +63,8 @@ linters:
     - reassign
     - revive
     - staticcheck
-    - stylecheck
     - tagalign
     - tagliatelle
-    - tenv
     - testableexamples
     - testifylint
     - thelper
@@ -78,31 +78,23 @@ linters:
     - wrapcheck
     - wsl
 
-linters-settings:
-  stylecheck:
-    checks: ['*', '-ST1000']
-  cyclop:
-    max-complexity: 15
+  settings:
+    cyclop:
+      max-complexity: 15
+    staticcheck:
+      checks:
+        - '*'
+        - -ST1000
+  exclusions:
+    warn-unused: true
+    presets:
+      - comments
+    rules:
+      - linters:
+          - gochecknoglobals
+        path: pkg/analyzer/analyzer.go
+        text: Analyzer is a global variable
 
 issues:
-  exclude-use-default: false
   max-issues-per-linter: 0
   max-same-issues: 0
-  exclude-rules:
-    - linters:
-        - revive
-      text: "package-comments: should have a package comment"
-    - linters:
-        - revive
-      text: "exported: .+ should have comment or be unexported"
-    - path: pkg/analyzer/analyzer.go
-      linters:
-        - gochecknoglobals
-      text: "Analyzer is a global variable"
-
-output:
-  show-stats: true
-  sort-results: true
-  sort-order:
-    - linter
-    - file

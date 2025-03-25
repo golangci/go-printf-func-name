@@ -44,7 +44,8 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			return
 		}
 
-		if formatParamNames := params[len(params)-2].Names; len(formatParamNames) == 0 || formatParamNames[len(formatParamNames)-1].Name != "format" {
+		formatParamNames := params[len(params)-2].Names
+		if len(formatParamNames) == 0 || formatParamNames[len(formatParamNames)-1].Name != "format" {
 			return
 		}
 

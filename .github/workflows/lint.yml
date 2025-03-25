@@ -1,16 +1,18 @@
 name: golangci-lint
+
 on:
   push:
     branches:
       - main
-      - master
   pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 env:
-  GOLANGCI_LINT_VERSION: v1.61
+  GOLANGCI_LINT_VERSION: v2.0
   CGO_ENABLED: 0
 
 jobs:
@@ -35,6 +37,6 @@ jobs:
           git diff --exit-code go.sum
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ env.GOLANGCI_LINT_VERSION }}
