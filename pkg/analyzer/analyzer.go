@@ -16,7 +16,7 @@ var Analyzer = &analysis.Analyzer{
 	Requires: []*analysis.Analyzer{inspect.Analyzer},
 }
 
-func run(pass *analysis.Pass) (interface{}, error) {
+func run(pass *analysis.Pass) (any, error) {
 	insp := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
 
 	nodeFilter := []ast.Node{
@@ -50,17 +50,13 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		}
 
 		argsParamType, ok := params[len(params)-1].Type.(*ast.Ellipsis)
-		if !ok { // args are not ellipsis (...args)
+		if !ok {
+			// args are not ellipsis (...args)
 			return
 		}
 
-		elementType, ok := argsParamType.Elt.(*ast.InterfaceType)
-		if !ok { // args are not of interface type, but we need interface{}
+		if !isAny(argsParamType) {
 			return
-		}
-
-		if elementType.Methods != nil && len(elementType.Methods.List) != 0 {
-			return // has >= 1 method in interface, but we need an empty interface "interface{}"
 		}
 
 		if strings.HasSuffix(funcDecl.Name.Name, "f") {
@@ -72,4 +68,23 @@ func run(pass *analysis.Pass) (interface{}, error) {
 	})
 
 	return nil, nil
+}
+
+func isAny(ell *ast.Ellipsis) bool {
+	switch elt := ell.Elt.(type) {
+	case *ast.InterfaceType:
+		if elt.Methods != nil && len(elt.Methods.List) != 0 {
+			// has >= 1 method in interface, but we need an empty interface "interface{}"
+			return false
+		}
+
+		return true
+
+	case *ast.Ident:
+		if elt.Name == "any" {
+			return true
+		}
+	}
+
+	return false
 }

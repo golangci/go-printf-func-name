@@ -28,3 +28,9 @@ func prinfLikeFunc(format string, args ...interface{}) {} // want "printf-like f
 func prinfLikeFuncWithExtraArgs1(extraArg, format string, args ...interface{}) {} // want "printf-like formatting function"
 
 func prinfLikeFuncWithExtraArgs2(extraArg int, format string, args ...interface{}) {} // want "printf-like formatting function"
+
+func prinfLikeFuncAny(format string, args ...any) {} // want "printf-like formatting function"
+
+func prinfLikeFuncWithExtraArgs1Any(extraArg, format string, args ...any) {} // want "printf-like formatting function"
+
+func prinfLikeFuncWithExtraArgs2Any(extraArg int, format string, args ...any) {} // want "printf-like formatting function"
