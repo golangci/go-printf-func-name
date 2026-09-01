@@ -4,6 +4,11 @@ formatters:
   enable:
     - gci
     - gofumpt
+  settings:
+    gofumpt:
+      extra:
+        clothe-returns: true
+        group-params: true
 
 linters:
   default: none
@@ -36,7 +41,7 @@ linters:
     - godot
     - godox
     - gomoddirectives
-    - gomodguard
+    - gomodguard_v2
     - goprintffuncname
     - gosec
     - govet
